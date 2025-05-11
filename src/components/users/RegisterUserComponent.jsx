@@ -1,117 +1,159 @@
-import { Formik } from 'formik';
+import { Formik, Field, Form } from 'formik';
 
 export default function RegisterUserComponent() {
-  const user = {
-    nome: '',
-    cpf: '',
-    email: '',
-    senha: '',
-    telefone: '',
-    endereco: {
-      cep: '',
-      logradouro: '',
-      complemento: '',
-      bairro: '',
-      localidade: '',
-      uf: '',
-      numero: ''
-    }
-  };
+    const user = {
+        nome: '',
+        cpf: '',
+        email: '',
+        senha: '',
+        telefone: '',
+        endereco: {
+            cep: '',
+            logradouro: '',
+            complemento: '',
+            bairro: '',
+            localidade: '',
+            uf: '',
+            numero: ''
+        }
+    };
 
-  const cadastrarUser = (values) => {
-    alert("OPA!");
-  };
+    const cadastrarUser = (values) => {
+        alert(values);
+        console.log(values)
+    };
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6 text-center">Registrar Usuário</h1>
-        <Formik initialValues={user} onSubmit={cadastrarUser}>
-          {(props) => (
-            <form onSubmit={props.handleSubmit} className="space-y-4">
-              {/* Nome */}
-              <div>
-                <label htmlFor="nome" className="block text-sm font-medium text-gray-700">Nome</label>
-                <input
-                  type="text"
-                  name="nome"
-                  id="nome"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.nome}
-                  className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+            <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
+                <h1 className="text-2xl font-bold mb-6 text-center">Registrar Usuário</h1>
 
-              {/* CPF */}
-              <div>
-                <label htmlFor="cpf" className="block text-sm font-medium text-gray-700">CPF</label>
-                <input
-                  type="text"
-                  name="cpf"
-                  id="cpf"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.cpf}
-                  className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
+                <Formik 
+                    initialValues={user} 
+                    onSubmit={values => cadastrarUser(values)}>
+                    <Form className="space-y-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Nome</label>
+                            <Field
+                                type="text"
+                                name="nome"
+                                className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
 
-              {/* Email */}
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.email}
-                  className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">CPF</label>
+                            <Field
+                                type="text"
+                                name="cpf"
+                                className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
 
-              {/* Senha */}
-              <div>
-                <label htmlFor="senha" className="block text-sm font-medium text-gray-700">Senha</label>
-                <input
-                  type="password"
-                  name="senha"
-                  id="senha"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.senha}
-                  className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Email</label>
+                            <Field
+                                type="email"
+                                name="email"
+                                className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
 
-              {/* Telefone */}
-              <div>
-                <label htmlFor="telefone" className="block text-sm font-medium text-gray-700">Telefone</label>
-                <input
-                  type="text"
-                  name="telefone"
-                  id="telefone"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.telefone}
-                  className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Senha</label>
+                            <Field
+                                type="password"
+                                name="senha"
+                                className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
 
-              {/* Botão */}
-              <div className="text-end">
-                <button
-                  type="submit"
-                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-                >
-                  Registrar
-                </button>
-              </div>
-            </form>
-          )}
-        </Formik>
-      </div>
-    </div>
-  );
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Telefone</label>
+                            <Field
+                                type="text"
+                                name="telefone"
+                                className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div>
+                            <h2 className="text-lg font-semibold mt-6 mb-2">Endereço</h2>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">CEP</label>
+                                <Field
+                                    type="text"
+                                    name="endereco.cep"
+                                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Logradouro</label>
+                                <Field
+                                    type="text"
+                                    name="endereco.logradouro"
+                                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Complemento</label>
+                                <Field
+                                    type="text"
+                                    name="endereco.complemento"
+                                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Bairro</label>
+                                <Field
+                                    type="text"
+                                    name="endereco.bairro"
+                                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Localidade</label>
+                                <Field
+                                    type="text"
+                                    name="endereco.localidade"
+                                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">UF</label>
+                                <Field
+                                    type="text"
+                                    name="endereco.uf"
+                                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Número</label>
+                                <Field
+                                    type="text"
+                                    name="endereco.numero"
+                                    className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="text-center">
+                            <button
+                                type="submit"
+                                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+                            >
+                                Registrar
+                            </button>
+                        </div>
+                    </Form>
+                </Formik>
+            </div>
+        </div>
+    );
 }
