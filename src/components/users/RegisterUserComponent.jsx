@@ -1,6 +1,9 @@
 import { Formik, Field, Form } from 'formik';
+import kauanTech from '../../services/kauanTech';
+import { useState } from 'react';
 
 export default function RegisterUserComponent() {
+    const [error, setError] = useState(null);
     const user = {
         nome: '',
         cpf: '',
@@ -18,11 +21,15 @@ export default function RegisterUserComponent() {
         }
     };
 
-    const cadastrarUser = (values) => {
-        alert(values);
-        console.log(values)
-    };
-
+    async function cadastrarUser(values) {
+        try {
+            const resposta = await kauanTech.post('/clientes', values)
+            alert("Cadastro foi efetuado com sucesso!")
+        } catch (error) {
+            setError(error)
+        }
+        
+    }
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
             <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
