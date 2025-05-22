@@ -2,6 +2,7 @@ import { Formik, Field, Form } from 'formik';
 import kauanTech from '../../services/kauanTech';
 import viaCep from '../../services/viaCep';
 import { useEffect, useState } from 'react';
+import { mask } from 'remask';
 
 export default function RegisterUserComponent() {
     const [error, setError] = useState(null);
@@ -77,6 +78,10 @@ export default function RegisterUserComponent() {
                             setFormValues(values);
                         }, [values]);
 
+                        // Padão da máscara
+                        const pattern = '999.999.999-99'
+                        // Add máscara no campo
+                        values.cpf = mask(values.cpf, pattern);
                         return (
                             <Form className="space-y-4">
                                 <div>
@@ -93,6 +98,8 @@ export default function RegisterUserComponent() {
                                     <Field
                                         type="text"
                                         name="cpf"
+                                        value={values.cpf}
+                                        onChange={handleChange}
                                         className="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                 </div>
