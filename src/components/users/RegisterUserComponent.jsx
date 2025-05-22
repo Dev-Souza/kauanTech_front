@@ -72,16 +72,22 @@ export default function RegisterUserComponent() {
                     enableReinitialize
                     onSubmit={values => cadastrarUser(values)}
                 >
-                    {({ values, handleChange, setFieldValue }) => {
+                    {({ values, handleChange, setFieldValue, handleSubmit }) => {
                         // Atualiza o formValues quando algo muda
                         useEffect(() => {
                             setFormValues(values);
                         }, [values]);
 
-                        // Padão da máscara
-                        const pattern = '999.999.999-99'
-                        // Add máscara no campo
-                        values.cpf = mask(values.cpf, pattern);
+                        // Padão da máscara de CPF
+                        const pattern_cpf = '999.999.999-99';
+                        // Add máscara no campo cpf
+                        values.cpf = mask(values.cpf, pattern_cpf);
+
+                        // Padrão da máscara de Telefone
+                        const pattern_tel = '(99) 99999-9999';
+                        // add máscara no campo telefone
+                        values.telefone = mask(values.telefone, pattern_tel);
+
                         return (
                             <Form className="space-y-4">
                                 <div>
@@ -201,6 +207,7 @@ export default function RegisterUserComponent() {
                                     <button
                                         type="submit"
                                         className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+                                        onClick={handleSubmit}
                                     >
                                         Registrar
                                     </button>
