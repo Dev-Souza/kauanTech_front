@@ -5,16 +5,19 @@ import { useNavigate } from 'react-router-dom';
 export default function LoginUserComponent() {
     // Config navegação
     const navigate = useNavigate();
-    
+
     // Function de autenticar no sistema
     const autenticar = async (values) => {
         try {
             const resultado = await kauanTech.post('auth/login', values);
             const token = (resultado.data.token);
             localStorage.setItem('token', token);
-
-            // Redireciona a tela
-            navigate('/')
+            if (resultado.data.role == 'admin') {
+                navigate('/painel')
+            } else {
+                // Redireciona a tela inicial para users que não são admin
+                navigate('/')
+            }
         } catch (error) {
             alert(error.response?.data?.mensagem)
         }
@@ -24,11 +27,11 @@ export default function LoginUserComponent() {
         <div className="flex justify-center items-center min-h-screen bg-base-200">
             <div className="card w-full max-w-md shadow-xl bg-base-100 p-8">
                 <h2 className="text-2xl font-bold text-center mb-6">Login de Usuário</h2>
-                <Formik 
+                <Formik
                     initialValues={{
                         email: '',
                         senha: ''
-                    }} 
+                    }}
                     // validationSchema={} 
                     onSubmit={values => autenticar(values)}>
                     {() => (
