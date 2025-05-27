@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import kauanTech from "../../../services/kauanTech";
 import { useNavigate } from "react-router-dom";
+import HeaderAdminComponent from "./HeaderAdminComponent";
 
 export default function ScreenAdminComponent() {
     const [token, setToken] = useState('');
@@ -8,7 +9,7 @@ export default function ScreenAdminComponent() {
     // Config navigation
     const navigate = useNavigate();
 
-     // Checando se é admin
+    // Checando se é admin
     useEffect(() => {
         const checkAdmin = async () => {
             try {
@@ -30,6 +31,9 @@ export default function ScreenAdminComponent() {
     }, [])
 
     return (
-        <h1>Tela Admin</h1>
+        <>
+            <HeaderAdminComponent caminho='/painel'/>
+            <h1 className="pt-30">Tela Admin</h1>
+        </>
     )
 }
