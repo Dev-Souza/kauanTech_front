@@ -2,38 +2,43 @@ import { useEffect, useState } from "react";
 import kauanTech from "../../../services/kauanTech";
 import { useNavigate } from "react-router-dom";
 import HeaderAdminComponent from "./HeaderAdminComponent";
+import SidebarComponent from "../../dashboard/SidebarComponent";
 
 export default function ScreenAdminComponent() {
     const [token, setToken] = useState('');
-
-    // Config navigation
     const navigate = useNavigate();
 
-    // Checando se é admin
     useEffect(() => {
         const checkAdmin = async () => {
             try {
                 const authToken = localStorage.getItem('token');
-                // Setando o token no state
-                setToken(authToken)
-                const response = await kauanTech.get('admin', {
+                setToken(authToken);
+                await kauanTech.get('admin', {
                     headers: {
                         'Authorization': `Bearer ${authToken}`,
                         'Content-Type': 'application/json'
                     }
                 });
             } catch (error) {
-                alert(error.response.data.mensagem)
-                navigate('/login')
+                alert(error.response.data.mensagem);
+                navigate('/login');
             }
-        }
+        };
         checkAdmin();
-    }, [])
+    }, []);
 
     return (
-        <>
-            <HeaderAdminComponent caminho='/painel'/>
-            <h1 className="pt-30">Tela Admin</h1>
-        </>
-    )
+        <div className="flex h-screen">
+            {/* Sidebar fixa à esquerda */}
+            <SidebarComponent />
+
+            {/* Área principal: Navbar + Conteúdo */}
+            <div className="flex-1 flex flex-col">
+                <HeaderAdminComponent caminho="/painel" />
+                <main className="flex-1 p-6 bg-gray-100">
+                    <h1 className="text-3xl font-bold">Tela Admin</h1>
+                </main>
+            </div>
+        </div>
+    );
 }
