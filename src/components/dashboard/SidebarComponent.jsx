@@ -6,8 +6,8 @@ export default function SidebarComponent() {
 
     const navItems = [
         { name: "Dashboard", path: "/painel", icon: <Home size={20} /> },
-        { name: "Usuários", path: "/admin/usuarios", icon: <Users size={20} /> },
-        { name: "Configurações", path: "/admin/configuracoes", icon: <Settings size={20} /> },
+        { name: "Usuários", path: "/admin/users", icon: <Users size={20} /> },
+        { name: "Produtos", path: "/admin/products", icon: <Settings size={20} /> },
         { name: "Sair", path: "/login", icon: <LogOut size={20} /> },
     ];
 

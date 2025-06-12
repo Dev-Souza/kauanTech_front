@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import kauanTech from "../../../services/kauanTech";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import HeaderAdminComponent from "./HeaderAdminComponent";
 import SidebarComponent from "../../dashboard/SidebarComponent";
 
@@ -36,7 +36,7 @@ export default function ScreenAdminComponent() {
             <div className="flex-1 flex flex-col">
                 <HeaderAdminComponent caminho="/painel" />
                 <main className="flex-1 p-6 bg-gray-100">
-                    <h1 className="text-3xl font-bold">Tela Admin</h1>
+                     <Outlet />
                 </main>
             </div>
         </div>
