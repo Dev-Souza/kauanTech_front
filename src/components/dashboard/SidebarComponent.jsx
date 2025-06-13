@@ -1,35 +1,123 @@
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, Users, Settings, LogOut } from "lucide-react";
+import {
+  Home,
+  Users,
+  Settings,
+  LogOut,
+  ChevronDown,
+  ChevronUp,
+  Wrench,
+  Plus,
+} from "lucide-react";
 
 export default function SidebarComponent() {
-    const location = useLocation();
+  const location = useLocation();
 
-    const navItems = [
-        { name: "Dashboard", path: "/painel", icon: <Home size={20} /> },
-        { name: "Usuários", path: "/admin/users", icon: <Users size={20} /> },
-        { name: "Produtos", path: "/admin/products", icon: <Settings size={20} /> },
-        { name: "Sair", path: "/login", icon: <LogOut size={20} /> },
-    ];
+  const [openUsers, setOpenUsers] = useState(false);
+  const [openProducts, setOpenProducts] = useState(false);
 
-    return (
-        <aside className="h-screen w-64 bg-gray-900 text-white flex flex-col shadow-lg">
-            <div className="p-6 text-2xl font-bold border-b border-gray-700">
-                Admin Panel
+  const isActive = (path) => location.pathname === path;
+
+  return (
+    <aside className="h-screen w-64 bg-gray-900 text-white flex flex-col shadow-lg">
+      <div className="p-6 text-2xl font-bold border-b border-gray-700">
+        Admin Panel
+      </div>
+      <nav className="flex-1 px-4 py-6 space-y-2">
+        <Link
+          to="/admin/dashboard"
+          className={`flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-700 transition ${
+            isActive("/admin/dashboard") ? "bg-gray-700" : ""
+          }`}
+        >
+          <Home size={20} />
+          Dashboard
+        </Link>
+
+        {/* Usuários Dropdown */}
+        <div>
+          <button
+            onClick={() => setOpenUsers(!openUsers)}
+            className="w-full flex items-center justify-between px-4 py-2 rounded-lg hover:bg-gray-700 transition"
+          >
+            <span className="flex items-center gap-3">
+              <Users size={20} />
+              Usuários
+            </span>
+            {openUsers ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+          </button>
+          {openUsers && (
+            <div className="ml-8 mt-2 space-y-1">
+              <Link
+                to="/admin/users/manage"
+                className={`flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-700 ${
+                  isActive("/admin/users") ? "bg-gray-700" : ""
+                }`}
+              >
+                <Wrench size={16} />
+                Gerenciar
+              </Link>
+              <Link
+                to="/admin/users/create"
+                className={`flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-700 ${
+                  isActive("/admin/users/create") ? "bg-gray-700" : ""
+                }`}
+              >
+                <Plus size={16} />
+                Cadastrar
+              </Link>
             </div>
-            <nav className="flex-1 px-4 py-6 space-y-2">
-                {navItems.map((item) => (
-                    <Link
-                        key={item.name}
-                        to={item.path}
-                        className={`flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-700 transition ${
-                            location.pathname === item.path ? "bg-gray-700" : ""
-                        }`}
-                    >
-                        {item.icon}
-                        {item.name}
-                    </Link>
-                ))}
-            </nav>
-        </aside>
-    );
+          )}
+        </div>
+
+        {/* Produtos Dropdown */}
+        <div>
+          <button
+            onClick={() => setOpenProducts(!openProducts)}
+            className="w-full flex items-center justify-between px-4 py-2 rounded-lg hover:bg-gray-700 transition"
+          >
+            <span className="flex items-center gap-3">
+              <Settings size={20} />
+              Produtos
+            </span>
+            {openProducts ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+          </button>
+          {openProducts && (
+            <div className="ml-8 mt-2 space-y-1">
+              <Link
+                to="/admin/products/manage"
+                className={`flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-700 ${
+                  isActive("/admin/products") ? "bg-gray-700" : ""
+                }`}
+              >
+                <Wrench size={16} />
+                Gerenciar
+              </Link>
+              <Link
+                to="/admin/products/create"
+                className={`flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-700 ${
+                  isActive("/admin/products/create") ? "bg-gray-700" : ""
+                }`}
+              >
+                <Plus size={16} />
+                Cadastrar
+              </Link>
+            </div>
+          )}
+        </div>
+
+        {/* Sair */}
+        <Link
+          to="/login"
+          className={`flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-700 transition ${
+            isActive("/login") ? "bg-gray-700" : ""
+          }`}
+        >
+          <LogOut size={20} />
+          Sair
+        </Link>
+      </nav>
+    </aside>
+  );
 }
