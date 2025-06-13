@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import MainScreenComponent from './components/MainScreenComponent'
 import HeaderComponent from './components/HeaderComponent'
@@ -6,8 +6,11 @@ import RegisterUserComponent from './components/users/RegisterUserComponent'
 import LoginUserComponent from './components/users/LoginUserComponent'
 import PainelAdminComponent from './components/users/admin/PainelAdminComponent'
 import ScreenAdminComponent from './components/users/admin/ScreenAdminComponent'
-import ProductAdminComponent from './components/users/admin/ProductAdminComponent'
-import UserAdminComponent from './components/users/admin/UserAdminComponent'
+import ProductManageAdminComponent from './components/users/admin/products/ProductManageAdminComponent'
+import ProductCreateAdminComponent from './components/users/admin/products/ProductCreateAdminComponent'
+import UserManageAdminComponent from './components/users/admin/users/UserManageAdminComponent'
+import UserCreateAdminComponent from './components/users/admin/users/UserCreateAdminComponent'
+import DashboardAdminComponent from './components/users/admin/dashboard/DashboardAdminComponent'
 
 function App() {
   return (
@@ -21,10 +24,16 @@ function App() {
         } />
         <Route path='/register' element={<RegisterUserComponent />} />
         <Route path='/login' element={<LoginUserComponent />} />
-        <Route path='/painel' element={<PainelAdminComponent />}/>
+        <Route path='/painel' element={<PainelAdminComponent />} />
         <Route path='/admin' element={<ScreenAdminComponent />}>
-          <Route path='users' element={<UserAdminComponent />}/>
-          <Route path='products' element={<ProductAdminComponent />} />
+          {/* Redirecionamento ao acessar /admin */}
+          <Route index element={<Navigate to="/admin/dashboard" replace />} />
+          <Route path="dashboard" element={<DashboardAdminComponent />} />
+          
+          <Route path='users/manage' element={<UserManageAdminComponent />} />
+          <Route path='users/create' element={<UserCreateAdminComponent />} />
+          <Route path='products/manage' element={<ProductManageAdminComponent />} />
+          <Route path='products/create' element={<ProductCreateAdminComponent />} />
         </Route>
       </Routes>
     </BrowserRouter>
