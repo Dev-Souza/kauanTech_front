@@ -1,5 +1,5 @@
 export default function ProductAdminComponent() {
     return (
-        <h1>Products</h1>
+        <h1>Products Manage</h1>
     )
 }
