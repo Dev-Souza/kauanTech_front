@@ -3,12 +3,12 @@ import { Link, useLocation } from "react-router-dom";
 import {
   Home,
   Users,
-  Settings,
   LogOut,
   ChevronDown,
   ChevronUp,
   Wrench,
   Plus,
+  Package,
 } from "lucide-react";
 
 export default function SidebarComponent() {
@@ -78,7 +78,7 @@ export default function SidebarComponent() {
             className="w-full flex items-center justify-between px-4 py-2 rounded-lg hover:bg-gray-700 transition"
           >
             <span className="flex items-center gap-3">
-              <Settings size={20} />
+              <Package size={20} />
               Produtos
             </span>
             {openProducts ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
