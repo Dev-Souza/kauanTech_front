@@ -38,7 +38,7 @@ export default function ProductDetailComponent() {
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">{produto.nome}</h1>
       <img
-        src={produto.imagem || '/images/default-product.png'}
+        src={`http://localhost:3000${produto.imagem}` || '/images/default-product.png'}
         alt={produto.nome}
         className="w-full max-h-[400px] object-contain mb-6 rounded"
       />

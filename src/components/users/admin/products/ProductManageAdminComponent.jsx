@@ -91,7 +91,11 @@ export default function ProductManageAdminComponent() {
             {products.map((p) => (
               <tr key={p._id}>
                 <td>
-                  <Image className="text-gray-400 mx-auto" size={20} />
+                  {p.imagem ? (
+                    <img src={`http://localhost:3000${p.imagem}`} alt={p.nome} className="w-12 h-12 object-cover rounded mx-auto" />
+                  ) : (
+                    <Image className="text-gray-400 mx-auto" size={20} />
+                  )}
                 </td>
                 <td>{p.codigo_barras}</td>
                 <td>{p.nome}</td>
@@ -147,15 +151,23 @@ export default function ProductManageAdminComponent() {
                 descricao: editingProduct.descricao || "",
                 categoria: editingProduct.categoria,
                 status: editingProduct.status,
+                imagem: editingProduct.imagem, // imagem nova
               }}
               validationSchema={validationSchema}
               onSubmit={async (values, { setSubmitting }) => {
                 try {
                   setLoading(true);
-                  await kauanTech.put(`/produtos/${editingProduct._id}`, values, {
+                  const formData = new FormData();
+                  Object.entries(values).forEach(([key, value]) => {
+                    if (value !== null && value !== undefined) {
+                      formData.append(key, value);
+                    }
+                  });
+
+                  const responseEdit = await kauanTech.put(`/produtos/${editingProduct._id}`, formData, {
                     headers: {
                       Authorization: `Bearer ${token}`,
-                      "Content-Type": "application/json",
+                      "Content-Type": "multipart/form-data",
                     },
                   });
                   alert("Produto atualizado com sucesso!");
@@ -171,7 +183,7 @@ export default function ProductManageAdminComponent() {
               }}
               enableReinitialize
             >
-              {({ isSubmitting }) => (
+              {({ isSubmitting, setFieldValue }) => (
                 <Form className="space-y-4">
                   <div>
                     <label className="label">Código de Barras</label>
@@ -213,6 +225,31 @@ export default function ProductManageAdminComponent() {
                     </Field>
                     <ErrorMessage name="status" component="div" className="text-red-500 text-sm" />
                   </div>
+
+                  {/* Visualização e upload da imagem */}
+                  <div>
+                    <label className="label">Imagem Atual</label>
+                    {editingProduct.imagem ? (
+                      <img
+                        src={`http://localhost:3000${editingProduct.imagem}`}
+                        alt="Imagem do Produto"
+                        className="w-24 h-24 object-cover rounded"
+                      />
+                    ) : (
+                      <p className="text-sm text-gray-400">Sem imagem</p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="label">Nova Imagem</label>
+                    <input
+                      type="file"
+                      name="imagem"
+                      className="file-input file-input-bordered w-full"
+                      onChange={(e) => setFieldValue("imagem", e.currentTarget.files[0])}
+                    />
+                    <ErrorMessage name="imagem" component="div" className="text-red-500 text-sm" />
+                  </div>
+
                   <div className="pt-4">
                     <button
                       type="submit"

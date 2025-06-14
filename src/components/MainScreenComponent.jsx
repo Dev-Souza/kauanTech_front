@@ -17,9 +17,7 @@ export default function StoreScreen() {
   const fetchProdutos = async () => {
     try {
       setLoading(true);
-      const response = await kauanTech.get('/produtos', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await kauanTech.get('/produtos');
       setProdutos(response.data);
       setError(null);
     } catch (err) {
@@ -49,7 +47,7 @@ export default function StoreScreen() {
             onClick={() => navigate(`/produtos/${produto._id}`)}
           >
             <img
-              src={produto.imagem || '/images/default-product.png'}
+              src={`http://localhost:3000${produto.imagem}` || '/images/default-product.png'}
               alt={produto.nome}
               className="w-full h-48 object-cover mb-2 rounded"
             />
