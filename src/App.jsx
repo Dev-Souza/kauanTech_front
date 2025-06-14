@@ -11,6 +11,7 @@ import ProductCreateAdminComponent from './components/users/admin/products/Produ
 import UserManageAdminComponent from './components/users/admin/users/UserManageAdminComponent'
 import UserCreateAdminComponent from './components/users/admin/users/UserCreateAdminComponent'
 import DashboardAdminComponent from './components/users/admin/dashboard/DashboardAdminComponent'
+import ProductDetailComponent from './components/products/ProductDetailComponent'
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
             <MainScreenComponent />
           </>
         } />
+        {/* Mostrar detalhes do produto clicado */}
+        <Route path="/produtos/:id" element={<ProductDetailComponent />} />
         <Route path='/register' element={<RegisterUserComponent />} />
         <Route path='/login' element={<LoginUserComponent />} />
         <Route path='/painel' element={<PainelAdminComponent />} />
