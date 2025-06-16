@@ -78,7 +78,7 @@ export default function HeaderComponentLogado({ props }) {
                     </div>
 
                     {/* Carrinho com contador */}
-                    <Link to="/carrinho" className="relative text-gray-700 hover:text-blue-600">
+                    <Link to="/cart" className="relative text-gray-700 hover:text-blue-600">
                         <ShoppingCart className="w-6 h-6" />
                         <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
                             {carrinhoQuantidade}
