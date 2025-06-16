@@ -4,13 +4,24 @@ import { useEffect, useState } from "react";
 
 export default function HeaderComponent() {
     const [token, setToken] = useState(null);
+    const [userData, setUserData] = useState(null);
 
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
-        setToken(storedToken);
+        if (storedToken) {
+            setToken(storedToken);
+
+            try {
+                const payloadBase64 = storedToken.split('.')[1];
+                const decodedPayload = JSON.parse(atob(payloadBase64));
+                setUserData(decodedPayload); // aqui vem nome, email, etc
+            } catch (error) {
+                console.error("Erro ao decodificar o token:", error);
+            }
+        }
     }, []);
 
-    if (token) return <HeaderComponentLogado />;
+    if (token && userData) return <HeaderComponentLogado props={userData} />;
 
     return (
         <header className="w-full bg-white shadow-md">
