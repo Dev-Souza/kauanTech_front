@@ -1,16 +1,39 @@
 import { ShoppingCart, ChevronDown } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
 import kauanTech from "../../services/kauanTech";
 
 export default function HeaderComponentLogado({ props }) {
     const { nome, email, role } = props
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [carrinhoQuantidade, setCarrinhoQuantidade] = useState(0)
+    const token = localStorage.getItem("token")
+
+    useEffect(() => {
+        async function getQtdInCarrinhoByEmail() {
+            try {
+                if (!token) return
+                const payloadBase64 = token.split('.')[1];
+                const decodedPayload = JSON.parse(atob(payloadBase64)); // aqui vem os dados que estão inseridos no token
+                const email = decodedPayload.email
+                const qtd = await kauanTech.get('carrinhos/qtd', {
+                    params: { email },
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                setCarrinhoQuantidade(qtd.data.quantidade)
+            } catch (error) {
+                alert(error.response.data.mensagem);
+                console.log(error)
+            }
+        }
+
+        getQtdInCarrinhoByEmail()
+    }, [carrinhoQuantidade])
 
     const navigate = useNavigate();
-
-    const carrinhoQuantidade = 3; // você pode substituir isso por um estado real
 
     const handleLogout = () => {
         localStorage.removeItem("token");
