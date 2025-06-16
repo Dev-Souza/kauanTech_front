@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HeaderComponentLogado from "./HeaderComponentLogado";
 import { useEffect, useState } from "react";
 import { Form, Formik } from "formik";
@@ -6,6 +6,8 @@ import { Form, Formik } from "formik";
 export default function HeaderComponent() {
     const [token, setToken] = useState(null);
     const [userData, setUserData] = useState(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
@@ -22,17 +24,6 @@ export default function HeaderComponent() {
         }
     }, []);
 
-    const buscarPorNomeProduto = async (nomeProduto) => {
-        try {
-            const produtoBuscado = await kauanTech.get('produtos/buscar', {
-                params: { nome: nomeProduto }
-            })
-        } catch (error) {
-            alert(error.response.data.mensagem)
-            console.log(error)
-        }
-    }
-
     if (token && userData) return <HeaderComponentLogado props={userData} />;
 
     return (
@@ -47,7 +38,7 @@ export default function HeaderComponent() {
                 {/* Barra de busca */}
                 <Formik
                     initialValues={{ nomeProduto: '' }}
-                    onSubmit={({ nomeProduto }) => buscarPorNomeProduto(nomeProduto)}
+                    onSubmit={({ nomeProduto }) => navigate(`/?nome=${encodeURIComponent(nomeProduto)}`)}
                 >
                     <Form className="flex flex-1 max-w-xl mx-6">
                         <input
