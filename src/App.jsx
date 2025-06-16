@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import MainScreenComponent from './components/MainScreenComponent'
-import HeaderComponent from './components/HeaderComponent'
+import HeaderComponent from './components/headers/HeaderComponent'
 import RegisterUserComponent from './components/users/RegisterUserComponent'
 import LoginUserComponent from './components/users/LoginUserComponent'
 import PainelAdminComponent from './components/users/admin/PainelAdminComponent'
