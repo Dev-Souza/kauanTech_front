@@ -1,10 +1,14 @@
 import { ShoppingCart, ChevronDown } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Field, Form, Formik } from "formik";
+import kauanTech from "../../services/kauanTech";
 
 export default function HeaderComponentLogado({ props }) {
     const { nome, email, role } = props
     const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    const navigate = useNavigate();
 
     const carrinhoQuantidade = 3; // você pode substituir isso por um estado real
 
@@ -22,19 +26,25 @@ export default function HeaderComponentLogado({ props }) {
                 </Link>
 
                 {/* Barra de busca */}
-                <form className="flex flex-1 max-w-xl mx-6">
-                    <input
-                        type="text"
-                        placeholder="Buscar produtos..."
-                        className="w-full px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <button
-                        type="submit"
-                        className="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 transition"
-                    >
-                        Buscar
-                    </button>
-                </form>
+                <Formik
+                    initialValues={{ nomeProduto: '' }}
+                    onSubmit={({ nomeProduto }) => navigate(`/?nome=${encodeURIComponent(nomeProduto)}`)}
+                >
+                    <Form className="flex flex-1 max-w-xl mx-6">
+                        <Field
+                            type="text"
+                            name="nomeProduto"
+                            placeholder="Buscar produtos..."
+                            className="w-full px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                        <button
+                            type="submit"
+                            className="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 transition"
+                        >
+                            Buscar
+                        </button>
+                    </Form>
+                </Formik>
 
                 {/* Ações */}
                 <div className="flex items-center space-x-6 relative">

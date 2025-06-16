@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import HeaderComponentLogado from "./HeaderComponentLogado";
 import { useEffect, useState } from "react";
+import { Form, Formik } from "formik";
 
 export default function HeaderComponent() {
     const [token, setToken] = useState(null);
@@ -21,6 +22,17 @@ export default function HeaderComponent() {
         }
     }, []);
 
+    const buscarPorNomeProduto = async (nomeProduto) => {
+        try {
+            const produtoBuscado = await kauanTech.get('produtos/buscar', {
+                params: { nome: nomeProduto }
+            })
+        } catch (error) {
+            alert(error.response.data.mensagem)
+            console.log(error)
+        }
+    }
+
     if (token && userData) return <HeaderComponentLogado props={userData} />;
 
     return (
@@ -33,19 +45,24 @@ export default function HeaderComponent() {
                 </Link>
 
                 {/* Barra de busca */}
-                <form className="flex flex-1 max-w-xl mx-6">
-                    <input
-                        type="text"
-                        placeholder="Buscar produtos..."
-                        className="w-full px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <button
-                        type="submit"
-                        className="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 transition"
-                    >
-                        Buscar
-                    </button>
-                </form>
+                <Formik
+                    initialValues={{ nomeProduto: '' }}
+                    onSubmit={({ nomeProduto }) => buscarPorNomeProduto(nomeProduto)}
+                >
+                    <Form className="flex flex-1 max-w-xl mx-6">
+                        <input
+                            type="text"
+                            placeholder="Buscar produtos..."
+                            className="w-full px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                        <button
+                            type="submit"
+                            className="bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 transition"
+                        >
+                            Buscar
+                        </button>
+                    </Form>
+                </Formik>
 
                 {/* Ações */}
                 <div className="flex items-center space-x-4">

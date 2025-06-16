@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import kauanTech from '../services/kauanTech';
 import LoadingComponent from './utils/LoadingComponent';
 
@@ -10,9 +10,17 @@ export default function StoreScreen() {
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
+  // Nome que vem como paramêtro
+  const [searchParams] = useSearchParams();
+  const nomeProduto = searchParams.get("nome");
+
   useEffect(() => {
-    fetchProdutos();
-  }, []);
+    if (nomeProduto) {
+      buscarPorNomeProduto(nomeProduto)
+    } else {
+      fetchProdutos();
+    }
+  }, [nomeProduto]);
 
   const fetchProdutos = async () => {
     try {
@@ -27,6 +35,21 @@ export default function StoreScreen() {
       setLoading(false);
     }
   };
+
+  const buscarPorNomeProduto = async (nomeProduto) => {
+    try {
+      setLoading(true);
+      const produtoBuscado = await kauanTech.get('produtos/buscar', {
+        params: { nome: nomeProduto }
+      })
+      setProdutos(produtoBuscado.data)
+    } catch (error) {
+      alert(error.response.data.mensagem)
+      console.log(error)
+    } finally {
+      setLoading(false);
+    }
+  }
 
   if (loading) return <LoadingComponent />;
 
