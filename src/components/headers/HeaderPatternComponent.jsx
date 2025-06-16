@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function HeaderAdminComponent(props) {
+export default function HeaderPatternComponent(props) {
     return (
         <div className="navbar bg-base-100 shadow-sm w-full">
             <div className="flex-1">

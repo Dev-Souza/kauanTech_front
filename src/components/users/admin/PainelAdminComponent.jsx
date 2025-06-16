@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import kauanTech from "../../../services/kauanTech"
 import { Link, useNavigate } from "react-router-dom";
-import HeaderAdminComponent from "./HeaderAdminComponent";
 
 // Importando imagens de minhas rotas
 import imgAdmin from '../../../assets/images/imgAdmin.svg'
 import imgStore from '../../../assets/images/imgStore.svg'
+import HeaderPatternComponent from "../../headers/HeaderPatternComponent";
 
 export default function PainelAdminComponent() {
     const [token, setToken] = useState('')
@@ -36,7 +36,7 @@ export default function PainelAdminComponent() {
 
     return (
         <>
-            <HeaderAdminComponent caminho='/' />
+            <HeaderPatternComponent caminho='/' />
             <section className="min-h-screen bg-base-300 pt-20">
                 {/* Container Principal da Página */}
                 <div className="container mx-auto px-4 py-8 md:py-12 ">
