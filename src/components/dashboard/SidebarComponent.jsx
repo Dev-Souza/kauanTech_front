@@ -19,6 +19,11 @@ export default function SidebarComponent() {
 
   const isActive = (path) => location.pathname === path;
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/login"; // redireciona após logout
+  };
+
   return (
     <aside className="h-screen w-64 bg-gray-900 text-white flex flex-col shadow-lg">
       <div className="p-6 text-2xl font-bold border-b border-gray-700">
@@ -27,9 +32,8 @@ export default function SidebarComponent() {
       <nav className="flex-1 px-4 py-6 space-y-2">
         <Link
           to="/admin/dashboard"
-          className={`flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-700 transition ${
-            isActive("/admin/dashboard") ? "bg-gray-700" : ""
-          }`}
+          className={`flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-700 transition ${isActive("/admin/dashboard") ? "bg-gray-700" : ""
+            }`}
         >
           <Home size={20} />
           Dashboard
@@ -51,18 +55,16 @@ export default function SidebarComponent() {
             <div className="ml-8 mt-2 space-y-1">
               <Link
                 to="/admin/users/manage"
-                className={`flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-700 ${
-                  isActive("/admin/users") ? "bg-gray-700" : ""
-                }`}
+                className={`flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-700 ${isActive("/admin/users") ? "bg-gray-700" : ""
+                  }`}
               >
                 <Wrench size={16} />
                 Gerenciar
               </Link>
               <Link
                 to="/admin/users/create"
-                className={`flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-700 ${
-                  isActive("/admin/users/create") ? "bg-gray-700" : ""
-                }`}
+                className={`flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-700 ${isActive("/admin/users/create") ? "bg-gray-700" : ""
+                  }`}
               >
                 <Plus size={16} />
                 Cadastrar
@@ -87,18 +89,16 @@ export default function SidebarComponent() {
             <div className="ml-8 mt-2 space-y-1">
               <Link
                 to="/admin/products/manage"
-                className={`flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-700 ${
-                  isActive("/admin/products") ? "bg-gray-700" : ""
-                }`}
+                className={`flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-700 ${isActive("/admin/products") ? "bg-gray-700" : ""
+                  }`}
               >
                 <Wrench size={16} />
                 Gerenciar
               </Link>
               <Link
                 to="/admin/products/create"
-                className={`flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-700 ${
-                  isActive("/admin/products/create") ? "bg-gray-700" : ""
-                }`}
+                className={`flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-700 ${isActive("/admin/products/create") ? "bg-gray-700" : ""
+                  }`}
               >
                 <Plus size={16} />
                 Cadastrar
@@ -108,15 +108,13 @@ export default function SidebarComponent() {
         </div>
 
         {/* Sair */}
-        <Link
-          to="/login"
-          className={`flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-700 transition ${
-            isActive("/login") ? "bg-gray-700" : ""
-          }`}
+        <button
+          onClick={handleLogout}
+          className="w-full text-left flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-700 transition"
         >
           <LogOut size={20} />
           Sair
-        </Link>
+        </button>
       </nav>
     </aside>
   );
