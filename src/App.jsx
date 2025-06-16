@@ -12,6 +12,7 @@ import UserManageAdminComponent from './components/users/admin/users/UserManageA
 import UserCreateAdminComponent from './components/users/admin/users/UserCreateAdminComponent'
 import DashboardAdminComponent from './components/users/admin/dashboard/DashboardAdminComponent'
 import ProductDetailComponent from './components/products/ProductDetailComponent'
+import CartComponent from './components/cart/CartComponent'
 
 function App() {
   return (
@@ -38,6 +39,8 @@ function App() {
           <Route path='products/manage' element={<ProductManageAdminComponent />} />
           <Route path='products/create' element={<ProductCreateAdminComponent />} />
         </Route>
+        {/* Cart component */}
+        <Route path='/cart' element={<CartComponent/>}/>
       </Routes>
     </BrowserRouter>
   )
