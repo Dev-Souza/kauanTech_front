@@ -1,18 +1,27 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import kauanTech from '../../services/kauanTech';
 import LoadingComponent from '../utils/LoadingComponent';
 import HeaderComponent from '../headers/HeaderComponent';
+import { jwtDecode } from 'jwt-decode';
 
 export default function ProductDetailComponent() {
   const { id } = useParams();
   const [produto, setProduto] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const token = localStorage.getItem('token');
+  // STATE ID USER
+  const [idUser, setIdUser] = useState('');
+  // Navigation
+  const navigate = useNavigate()
 
   useEffect(() => {
+    // Caso vier o token, eu pego o ID do user
+    if (token) {
+      const decoded = jwtDecode(token);
+      setIdUser(decoded.id)
+    }
     fetchProduto();
   }, [id]);
 
@@ -23,27 +32,53 @@ export default function ProductDetailComponent() {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProduto(response.data);
-      setError(null);
     } catch (err) {
-      setError('Erro ao carregar o produto.');
+      alert('Erro ao carregar o produto.');
       console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  if (loading) return <LoadingComponent />;
-  if (error) return <div className="text-red-500 text-center mt-10">{error}</div>;
-  if (!produto) return <div className="text-center mt-10 text-gray-500">Produto não encontrado.</div>;
-
-  const adicionarAoCarrinho = async (qtd, produto) => {
-    console.log(qtd, produto)
+  const adicionarAoCarrinho = async (idProduto, qtd) => {
+    try {
+      // Caso não venha o ID o usuário precisa fazer login
+      if (idUser) {
+        setLoading(true)
+        // Montando o cart
+        const carrinho = {
+          cliente: idUser,
+          produto: [
+            {
+              id: idProduto,
+              quantidade: qtd
+            }
+          ]
+        }
+        const addCart = await kauanTech.post('carrinhos', carrinho, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        alert("Produto adicionado ao carrinho!");
+      } else {
+        alert("Faça login para adicionar produto no carrinho!");
+        navigate("/login")
+      }
+    } catch (error) {
+      alert(error.response.data.mensagem)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const comprarAgora = async (qtd, produto) => {
-    console.log(qtd, produto)
+
   }
 
+  if (loading) return <LoadingComponent />;
+
+  if (!produto) return <div className="text-center mt-10 text-gray-500">Produto não encontrado.</div>;
   return (
     <>
       <HeaderComponent />
@@ -67,7 +102,7 @@ export default function ProductDetailComponent() {
 
           <Formik
             initialValues={{ quantidade: 1 }}
-            onSubmit={({ quantidade }) => adicionarAoCarrinho(quantidade, produto)}
+            onSubmit={({ quantidade }) => adicionarAoCarrinho(produto._id, quantidade)}
           >
             {({ values }) => (
               <Form className="space-y-4">
