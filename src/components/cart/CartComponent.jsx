@@ -18,49 +18,54 @@ export default function CartComponent() {
         produto: [],
         total_precos: 0
     });
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const token = localStorage.getItem("token");
     // MODAL
     const [isModalOpen, setIsModalOpen] = useState(false);
     // Navigate
     const navigate = useNavigate();
 
-    // Função para buscar os dados do carrinho (sem alterações)
-    useEffect(() => {
-        const fetchCarrinho = async () => {
-            try {
-                if (!token) {
-                    setLoading(false);
-                    return;
-                }
-                const payloadBase64 = token.split('.')[1];
-                const decodedPayload = JSON.parse(atob(payloadBase64));
-                const email = decodedPayload.email;
-                // Buscando o carrinho
-                const response = await kauanTech.get(`carrinhos/existente`, {
-                    params: { email },
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                console.log(response.data)
-                setCarrinho({
-                    idCarrinho: response.data._id,
-                    idCliente: response.data.cliente._id,
-                    produto: response.data.produto || [],
-                    total_precos: response.data.total_precos || 0
-                });
-            } catch (error) {
-                if (error.response && error.response.status === 404) {
-                    setCarrinho({ idCarrinho: '', idCliente: '', produto: [], total_precos: 0 });
-                } else {
-                    alert(error.response?.data?.mensagem || "Ocorreu um erro ao buscar seu carrinho.");
-                    console.error("Erro ao buscar carrinho:", error);
-                }
-            } finally {
+    const fetchCarrinho = async () => {
+        try {
+            if (!token) {
                 setLoading(false);
+                return;
             }
-        };
-        fetchCarrinho();
-    }, [token]);
+
+            const payloadBase64 = token.split('.')[1];
+            const decodedPayload = JSON.parse(atob(payloadBase64));
+            const email = decodedPayload.email;
+
+            const response = await kauanTech.get(`carrinhos/existente`, {
+                params: { email },
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            // ⚠️ Se vier só a mensagem, não há carrinho
+            if (response.data.mensagem) {
+                setCarrinho({ idCarrinho: '', idCliente: '', produto: [], total_precos: 0 });
+                return;
+            }
+
+            // Carrinho existe, pode setar normalmente
+            setCarrinho({
+                idCarrinho: response.data._id,
+                idCliente: response.data.cliente?._id || '',
+                produto: response.data.produto || [],
+                total_precos: response.data.total_precos || 0
+            });
+
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                setCarrinho({ idCarrinho: '', idCliente: '', produto: [], total_precos: 0 });
+            } else {
+                alert(error.response?.data?.mensagem || "Ocorreu um erro ao buscar seu carrinho.");
+                console.error("Erro ao buscar carrinho:", error);
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
     // Adicionar um item daquele produto no carrinho
     const handleUpdateQuantidade = async (productId) => {
