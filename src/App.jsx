@@ -41,7 +41,7 @@ function App() {
         </Route>
         {/* Cart component */}
         <Route path='/cart' element={<CartComponent />} />
-        <Route path='/continue-buying' element={<ContinueBuyingComponent />} />
+        <Route path='/continue-buying/:idCart' element={<ContinueBuyingComponent />} />
         
       </Routes>
     </BrowserRouter>
