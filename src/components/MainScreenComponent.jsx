@@ -27,6 +27,7 @@ export default function StoreScreen() {
     try {
       setLoading(true);
       const response = await kauanTech.get('/produtos');
+      console.log(response.data)
       setProdutos(response.data);
       setError(null);
     } catch (err) {
@@ -64,8 +65,7 @@ export default function StoreScreen() {
       <h1 className="text-3xl font-bold mb-6">Loja</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {produtos.map((produto) => {
-
+        {produtos.filter(produto => produto.quantidade > 0).map((produto) => {
           const hasImage = produto.imagem && produto.imagem.trim() !== ""
 
           return (
