@@ -27,7 +27,6 @@ export default function StoreScreen() {
     try {
       setLoading(true);
       const response = await kauanTech.get('/produtos');
-      console.log(response.data)
       setProdutos(response.data);
       setError(null);
     } catch (err) {
