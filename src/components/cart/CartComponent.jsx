@@ -177,7 +177,7 @@ export default function CartComponent() {
                     {carrinho.produto.map((item) => (
                         <div key={item.id._id} className="flex items-center border rounded-lg p-4 shadow-sm bg-white">
                             <img
-                                src={item.id.imagem || "https://placehold.co/120x120/EBF4FF/76A9FA?text=Imagem"}
+                                src={`http://localhost:3000${item.id.imagem}` || "https://placehold.co/120x120/EBF4FF/76A9FA?text=Imagem"}
                                 alt={item.id.nome}
                                 className="w-28 h-28 object-cover rounded mr-6"
                             />
@@ -230,7 +230,7 @@ export default function CartComponent() {
                             </p>
                         </div>
                         <div className="flex justify-between items-center gap-4 mt-8 border-t pt-6">
-                            <Link to="/continue-buying" className="px-5 py-2 border border-gray-400 text-gray-700 rounded-md hover:bg-gray-100 font-semibold">
+                            <Link to={`/continue-buying/${carrinho.idCarrinho}`} className="px-5 py-2 border border-gray-400 text-gray-700 rounded-md hover:bg-gray-100 font-semibold">
                                 Continuar comprando
                             </Link>
                             <button
