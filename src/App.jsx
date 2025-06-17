@@ -13,6 +13,7 @@ import UserCreateAdminComponent from './components/users/admin/users/UserCreateA
 import DashboardAdminComponent from './components/users/admin/dashboard/DashboardAdminComponent'
 import ProductDetailComponent from './components/products/ProductDetailComponent'
 import CartComponent from './components/cart/CartComponent'
+import ContinueBuyingComponent from './components/cart/shopping/ContinueBuyingComponent'
 
 function App() {
   return (
@@ -33,14 +34,15 @@ function App() {
           {/* Redirecionamento ao acessar /admin */}
           <Route index element={<Navigate to="/admin/dashboard" replace />} />
           <Route path="dashboard" element={<DashboardAdminComponent />} />
-          
           <Route path='users/manage' element={<UserManageAdminComponent />} />
           <Route path='users/create' element={<UserCreateAdminComponent />} />
           <Route path='products/manage' element={<ProductManageAdminComponent />} />
           <Route path='products/create' element={<ProductCreateAdminComponent />} />
         </Route>
         {/* Cart component */}
-        <Route path='/cart' element={<CartComponent/>}/>
+        <Route path='/cart' element={<CartComponent />} />
+        <Route path='/continue-buying' element={<ContinueBuyingComponent />} />
+        
       </Routes>
     </BrowserRouter>
   )
