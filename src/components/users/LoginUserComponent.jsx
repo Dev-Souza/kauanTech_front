@@ -26,7 +26,7 @@ export default function LoginUserComponent() {
 
     return (
         <>
-            <HeaderPatternComponent />
+            <HeaderPatternComponent caminho="/"/>
             <div className="flex justify-center items-center min-h-screen bg-base-200">
                 <div className="card w-full max-w-md shadow-xl bg-base-100 p-8">
                     <h2 className="text-2xl font-bold text-center mb-6">Login de Usuário</h2>
