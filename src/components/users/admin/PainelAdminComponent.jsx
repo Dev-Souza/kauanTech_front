@@ -42,50 +42,69 @@ export default function PainelAdminComponent() {
     return (
         <>
             <HeaderPatternComponent caminho='/' />
-            <section className="min-h-screen bg-base-300 pt-20">
+            <section className="min-h-screen bg-gradient-to-br from-base-200 to-base-300 pt-16 pb-12">
                 {/* Container Principal da Página */}
-                <div className="container mx-auto px-4 py-8 md:py-12 ">
-                    <h1 className="text-center text-3xl md:text-4xl font-bold mb-8 md:mb-12">
-                        Painel de Admin
-                    </h1>
+                <div className="container mx-auto px-4 py-8">
+                    {/* Título com destaque */}
+                    <div className="text-center mb-12">
+                        <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 mb-4">
+                            Painel Administrativo
+                        </h1>
+                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                            Gerencie todas as funcionalidades do sistema de forma centralizada
+                        </p>
+                    </div>
 
-                    {/* Container Flex para os Cards */}
-                    <div className="flex flex-wrap justify-center items-stretch gap-8">
-
-                        {/* Card 1 */}
-                        <Link to='/' className="w-full max-w-2xl text-inherit no-underline">
-                            <div className="card h-full bg-base-100 shadow-xl transition-transform hover:scale-105">
-                                <figure className="px-10 pt-10">
+                    {/* Grid de Cards */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                        {/* Card Loja */}
+                        <Link to='/' className="group transform transition-all hover:-translate-y-2">
+                            <div className="card h-full bg-base-100 shadow-xl border border-base-200 group-hover:border-blue-200">
+                                <figure className="px-8 pt-8">
                                     <img
                                         src={imgStore}
                                         alt="Página Inicial"
-                                        className="rounded-xl" />
+                                        className="rounded-xl h-48 w-full object-contain"
+                                    />
                                 </figure>
-                                <div className="card-body items-center text-center">
-                                    <h2 className="card-title text-2xl">Acessar Loja</h2>
-                                    <div className="card-actions mt-4">
-                                        <div className="btn btn-secondary text-sm sm:text-base md:text-lg lg:text-lg whitespace-nowrap rounded-lg">Ir para Loja</div>
+                                <div className="card-body items-center text-center p-6">
+                                    <h2 className="card-title text-2xl font-semibold mb-2">Acessar Loja</h2>
+                                    <p className="text-gray-600 mb-4">Visualize como os clientes veem sua loja</p>
+                                    <div className="card-actions">
+                                        <button className="btn btn-wide rounded-full bg-gradient-to-r from-blue-500 to-blue-600 border-none text-white hover:from-blue-600 hover:to-blue-700">
+                                            Ir para Loja
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </Link>
 
-                        <Link to='/admin' className="w-full max-w-2xl text-inherit no-underline">
-                            <div className="card h-full bg-base-100 shadow-xl transition-transform hover:scale-105">
-                                <figure className="px-10 pt-10">
+                        {/* Card Admin */}
+                        <Link to='/admin' className="group transform transition-all hover:-translate-y-2">
+                            <div className="card h-full bg-base-100 shadow-xl border border-base-200 group-hover:border-blue-200">
+                                <figure className="px-8 pt-8">
                                     <img
                                         src={imgAdmin}
                                         alt="Gerenciar Produtos"
-                                        className="rounded-xl" />
+                                        className="rounded-xl h-48 w-full object-contain"
+                                    />
                                 </figure>
-                                <div className="card-body items-center text-center">
-                                    <h2 className="card-title text-2xl">Gerenciar Produtos</h2>
-                                    <div className="card-actions mt-4">
-                                        <div className="btn btn-primary text-sm sm:text-base md:text-lg lg:text-lg whitespace-nowrap rounded-lg">Gerenciar</div>
+                                <div className="card-body items-center text-center p-6">
+                                    <h2 className="card-title text-2xl font-semibold mb-2">Gerenciar Produtos</h2>
+                                    <p className="text-gray-600 mb-4">Adicione, edite ou remova produtos do catálogo</p>
+                                    <div className="card-actions">
+                                        <button className="btn btn-wide rounded-full bg-gradient-to-r from-blue-600 to-blue-700 border-none text-white hover:from-blue-700 hover:to-blue-800">
+                                            Gerenciar
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </Link>
+                    </div>
+
+                    {/* Rodapé do Painel */}
+                    <div className="mt-12 text-center text-gray-500 text-sm">
+                        <p>Sessão ativa como administrador</p>
                     </div>
                 </div>
             </section>
