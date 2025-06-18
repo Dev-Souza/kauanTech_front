@@ -24,48 +24,55 @@ export default function CartComponent() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     // Navigate
     const navigate = useNavigate();
+    useEffect(() => {
+        const fetchCarrinho = async () => {
+            try {
+                if (!token) {
+                    setLoading(false);
+                    return;
+                }
 
-    const fetchCarrinho = async () => {
-        try {
-            if (!token) {
+                const payloadBase64 = token.split('.')[1];
+                const decodedPayload = JSON.parse(atob(payloadBase64));
+                const email = decodedPayload.email;
+
+                const response = await kauanTech.get(`carrinhos/existente`, {
+                    params: { email },
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                // ⚠️ Se vier só a mensagem, não há carrinho
+                if (response.data.mensagem) {
+                    setCarrinho({ idCarrinho: '', idCliente: '', produto: [], total_precos: 0 });
+                    return;
+                }
+
+                // Carrinho existe, pode setar normalmente
+                setCarrinho({
+                    idCarrinho: response.data._id,
+                    idCliente: response.data.cliente?._id || '',
+                    produto: response.data.produto || [],
+                    total_precos: response.data.total_precos || 0
+                });
+
+            } catch (error) {
+                if (error.response.status == 403) {
+                    alert("Sessão expirada, faça login novamente!")
+                    return navigate('/login')
+                }
+                if (error.response && error.response.status === 404) {
+                    setCarrinho({ idCarrinho: '', idCliente: '', produto: [], total_precos: 0 });
+                } else {
+                    alert(error.response?.data?.mensagem || "Ocorreu um erro ao buscar seu carrinho.");
+                    console.error("Erro ao buscar carrinho:", error);
+                }
+            } finally {
                 setLoading(false);
-                return;
             }
+        };
+        fetchCarrinho()
+    }, [])
 
-            const payloadBase64 = token.split('.')[1];
-            const decodedPayload = JSON.parse(atob(payloadBase64));
-            const email = decodedPayload.email;
-
-            const response = await kauanTech.get(`carrinhos/existente`, {
-                params: { email },
-                headers: { Authorization: `Bearer ${token}` }
-            });
-
-            // ⚠️ Se vier só a mensagem, não há carrinho
-            if (response.data.mensagem) {
-                setCarrinho({ idCarrinho: '', idCliente: '', produto: [], total_precos: 0 });
-                return;
-            }
-
-            // Carrinho existe, pode setar normalmente
-            setCarrinho({
-                idCarrinho: response.data._id,
-                idCliente: response.data.cliente?._id || '',
-                produto: response.data.produto || [],
-                total_precos: response.data.total_precos || 0
-            });
-
-        } catch (error) {
-            if (error.response && error.response.status === 404) {
-                setCarrinho({ idCarrinho: '', idCliente: '', produto: [], total_precos: 0 });
-            } else {
-                alert(error.response?.data?.mensagem || "Ocorreu um erro ao buscar seu carrinho.");
-                console.error("Erro ao buscar carrinho:", error);
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
 
     // Adicionar um item daquele produto no carrinho
     const handleUpdateQuantidade = async (productId) => {
@@ -85,6 +92,10 @@ export default function CartComponent() {
             })
             window.location.reload()
         } catch (error) {
+            if (error.response.status == 403) {
+                alert("Sessão expirada, faça login novamente!")
+                return navigate('/login')
+            }
             alert(error.response.data.mensagem)
         } finally {
             setLoading(false);
@@ -105,6 +116,10 @@ export default function CartComponent() {
             });
             window.location.reload()
         } catch (error) {
+            if (error.response.status == 403) {
+                alert("Sessão expirada, faça login novamente!")
+                return navigate('/login')
+            }
             alert(error.response?.data?.mensagem || "Erro ao excluir o item.");
             console.error(error.response?.data?.mensagem);
         } finally {
@@ -127,6 +142,10 @@ export default function CartComponent() {
             alert("Produto retirado do carrinho!");
             window.location.reload()
         } catch (error) {
+            if (error.response.status == 403) {
+                alert("Sessão expirada, faça login novamente!")
+                return navigate('/login')
+            }
             alert(error.response?.data?.mensagem || "Erro ao excluir o item.");
             console.error(error.response?.data?.mensagem);
         } finally {
@@ -149,6 +168,10 @@ export default function CartComponent() {
             alert(`Compra efetuda no ${pagamento.forma_pagamento} com sucesso!`)
             navigate('/')
         } catch (error) {
+            if (error.response.status == 403) {
+                alert("Sessão expirada, faça login novamente!")
+                return navigate('/login')
+            }
             alert(error.response.data.mensagem)
         } finally {
             setLoading(false)

@@ -29,6 +29,10 @@ export default function ProductCreateAdminComponent() {
                     headers: { 'Authorization': `Bearer ${authToken}` }
                 });
             } catch (error) {
+                if (error.response.status == 403) {
+                    alert("Sessão expirada, faça login novamente!")
+                    return navigate('/login')
+                }
                 alert(error.response?.data?.mensagem || 'Erro de autenticação');
                 navigate('/login');
             }
@@ -56,6 +60,10 @@ export default function ProductCreateAdminComponent() {
             resetForm();
             navigate('/admin/products/manage');
         } catch (error) {
+            if (error.response.status == 403) {
+                alert("Sessão expirada, faça login novamente!")
+                return navigate('/login')
+            }
             alert("Erro ao cadastrar produto! " + (error.response?.data?.mensagem || error.message));
             console.error(error);
         } finally {

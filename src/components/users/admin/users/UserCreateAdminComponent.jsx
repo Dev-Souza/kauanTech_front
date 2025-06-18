@@ -77,6 +77,10 @@ export default function UserCreateAdminComponent() {
                     },
                 });
             } catch (error) {
+                if (error.response.status == 403) {
+                    alert("Sessão expirada, faça login novamente!")
+                    return navigate('/login')
+                }
                 alert(error?.response?.data?.mensagem || 'Acesso negado');
                 navigate('/login');
             }
@@ -104,6 +108,10 @@ export default function UserCreateAdminComponent() {
                 alert('Usuário cadastrado com sucesso!');
                 navigate('/admin/users/manage');
             } catch (error) {
+                if (error.response.status == 403) {
+                    alert("Sessão expirada, faça login novamente!")
+                    return navigate('/login')
+                }
                 alert('Erro ao cadastrar usuário!');
                 console.error(error);
             } finally {

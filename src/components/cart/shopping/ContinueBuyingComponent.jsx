@@ -42,6 +42,10 @@ export default function ContinueBuyingComponent() {
                 console.log(cartResponse.data);
                 getUser(cartResponse.data.cliente._id);
             } catch (error) {
+                if (error.response.status == 403) {
+                    alert("Sessão expirada, faça login novamente!")
+                    return navigate('/login')
+                }
                 alert(error.response?.data?.mensagem || "Erro ao carregar carrinho");
                 console.log(error);
             } finally {
@@ -66,6 +70,10 @@ export default function ContinueBuyingComponent() {
             console.log("USER");
             console.log(userResponse.data);
         } catch (error) {
+            if (error.response.status == 403) {
+                alert("Sessão expirada, faça login novamente!")
+                return navigate('/login')
+            }
             alert(error.response?.data?.mensagem || "Erro ao carregar usuário");
         } finally {
             setLoading(false);
@@ -96,6 +104,10 @@ export default function ContinueBuyingComponent() {
             })
             setIsModalOpen(true)
         } catch (error) {
+            if (error.response.status == 403) {
+                alert("Sessão expirada, faça login novamente!")
+                return navigate('/login')
+            }
             alert(error.response.data.mensagem)
         } finally {
             setLoading(false)
@@ -118,6 +130,10 @@ export default function ContinueBuyingComponent() {
             alert(`Compra efetuda no ${pagamento.forma_pagamento} com sucesso!`)
             navigate('/')
         } catch (error) {
+            if (error.response.status == 403) {
+                alert("Sessão expirada, faça login novamente!")
+                return navigate('/login')
+            }
             alert(error.response.data.mensagem)
         } finally {
             setLoading(false)

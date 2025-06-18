@@ -20,6 +20,10 @@ export default function ScreenAdminComponent() {
                     }
                 });
             } catch (error) {
+                if (error.response.status == 403) {
+                    alert("Sessão expirada, faça login novamente!")
+                    return navigate('/login')
+                }
                 alert(error.response.data.mensagem);
                 navigate('/login');
             }
@@ -36,7 +40,7 @@ export default function ScreenAdminComponent() {
             <div className="flex-1 flex flex-col">
                 <HeaderPatternComponent caminho="/painel" />
                 <main className="flex-1 p-6 bg-gray-100">
-                     <Outlet />
+                    <Outlet />
                 </main>
             </div>
         </div>

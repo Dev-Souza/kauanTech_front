@@ -66,6 +66,10 @@ export default function ProductDetailComponent() {
         navigate("/login")
       }
     } catch (error) {
+      if (error.response.status == 403) {
+        alert("Sessão expirada, faça login novamente!")
+        return navigate('/login')
+      }
       alert(error.response.data.mensagem)
     } finally {
       setLoading(false)

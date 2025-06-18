@@ -30,6 +30,10 @@ export default function ProductManageAdminComponent() {
       });
       setProducts(response.data);
     } catch (error) {
+      if (error.response.status == 403) {
+        alert("Sessão expirada, faça login novamente!")
+        return navigate('/login')
+      }
       alert("Erro ao carregar produtos");
       console.error(error);
     } finally {
@@ -47,6 +51,10 @@ export default function ProductManageAdminComponent() {
       alert("Produto excluído!");
       fetchProducts();
     } catch (error) {
+      if (error.response.status == 403) {
+        alert("Sessão expirada, faça login novamente!")
+        return navigate('/login')
+      }
       alert("Erro ao excluir produto");
       console.error(error);
     } finally {
@@ -174,6 +182,10 @@ export default function ProductManageAdminComponent() {
                   setEditingProduct(null);
                   fetchProducts();
                 } catch (error) {
+                  if (error.response.status == 403) {
+                    alert("Sessão expirada, faça login novamente!")
+                    return navigate('/login')
+                  }
                   alert("Erro ao atualizar produto");
                   console.error(error);
                 } finally {

@@ -34,6 +34,10 @@ export default function UserAdminComponent() {
             setUsuarios(response.data);
             console.log(response.data)
         } catch (error) {
+            if (error.response.status == 403) {
+                alert("Sessão expirada, faça login novamente!")
+                return navigate('/login')
+            }
             alert('Erro ao carregar usuários.');
             console.error(error);
         } finally {
@@ -50,6 +54,10 @@ export default function UserAdminComponent() {
             alert('Usuário deletado com sucesso.');
             setUsuarios((prev) => prev.filter((user) => user.id !== id));
         } catch (error) {
+            if (error.response.status == 403) {
+                alert("Sessão expirada, faça login novamente!")
+                return navigate('/login')
+            }
             alert('Erro ao deletar usuário.');
             console.error(error);
         }
@@ -159,6 +167,10 @@ export default function UserAdminComponent() {
                                     setEditingUser(null);
                                     fetchUsuarios();
                                 } catch (error) {
+                                    if (error.response.status == 403) {
+                                        alert("Sessão expirada, faça login novamente!")
+                                        return navigate('/login')
+                                    }
                                     alert('Erro ao atualizar usuário.');
                                     console.error(error);
                                 } finally {
