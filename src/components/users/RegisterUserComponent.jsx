@@ -102,7 +102,7 @@ export default function RegisterUserComponent() {
     return (
         <>
             <HeaderPatternComponent caminho="/" />
-            <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6 sm:p-8">
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-6 sm:p-8">
                 <div className="bg-white p-10 rounded-xl shadow-lg w-full max-w-xl border border-gray-200">
                     <h1 className="text-4xl font-bold mb-10 text-center text-gray-800">Registrar Usuário</h1>
 
