@@ -33,6 +33,11 @@ export default function ProductDetailComponent() {
       });
       setProduto(response.data);
     } catch (err) {
+      if (err.response.status == 403) {
+        alert("Sessão expirada, faça login novamente!")
+        localStorage.removeItem("token");
+        return navigate('/login')
+      }
       alert('Erro ao carregar o produto.');
       console.error(err);
     } finally {
@@ -63,11 +68,13 @@ export default function ProductDetailComponent() {
         alert("Produto adicionado ao carrinho!");
       } else {
         alert("Faça login para adicionar produto no carrinho!");
+        localStorage.removeItem("token");
         navigate("/login")
       }
     } catch (error) {
       if (error.response.status == 403) {
         alert("Sessão expirada, faça login novamente!")
+        localStorage.removeItem("token");
         return navigate('/login')
       }
       alert(error.response.data.mensagem)

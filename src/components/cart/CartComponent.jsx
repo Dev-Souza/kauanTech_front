@@ -58,6 +58,7 @@ export default function CartComponent() {
             } catch (error) {
                 if (error.response.status == 403) {
                     alert("Sessão expirada, faça login novamente!")
+                    localStorage.removeItem("token");
                     return navigate('/login')
                 }
                 if (error.response && error.response.status === 404) {
@@ -94,6 +95,7 @@ export default function CartComponent() {
         } catch (error) {
             if (error.response.status == 403) {
                 alert("Sessão expirada, faça login novamente!")
+                localStorage.removeItem("token");
                 return navigate('/login')
             }
             alert(error.response.data.mensagem)
@@ -118,6 +120,7 @@ export default function CartComponent() {
         } catch (error) {
             if (error.response.status == 403) {
                 alert("Sessão expirada, faça login novamente!")
+                localStorage.removeItem("token");
                 return navigate('/login')
             }
             alert(error.response?.data?.mensagem || "Erro ao excluir o item.");
@@ -144,6 +147,7 @@ export default function CartComponent() {
         } catch (error) {
             if (error.response.status == 403) {
                 alert("Sessão expirada, faça login novamente!")
+                localStorage.removeItem("token");
                 return navigate('/login')
             }
             alert(error.response?.data?.mensagem || "Erro ao excluir o item.");
@@ -170,6 +174,7 @@ export default function CartComponent() {
         } catch (error) {
             if (error.response.status == 403) {
                 alert("Sessão expirada, faça login novamente!")
+                localStorage.removeItem("token");
                 return navigate('/login')
             }
             alert(error.response.data.mensagem)

@@ -36,6 +36,7 @@ export default function UserAdminComponent() {
         } catch (error) {
             if (error.response.status == 403) {
                 alert("Sessão expirada, faça login novamente!")
+                localStorage.removeItem("token");
                 return navigate('/login')
             }
             alert('Erro ao carregar usuários.');
@@ -56,6 +57,7 @@ export default function UserAdminComponent() {
         } catch (error) {
             if (error.response.status == 403) {
                 alert("Sessão expirada, faça login novamente!")
+                localStorage.removeItem("token");
                 return navigate('/login')
             }
             alert('Erro ao deletar usuário.');
@@ -169,6 +171,7 @@ export default function UserAdminComponent() {
                                 } catch (error) {
                                     if (error.response.status == 403) {
                                         alert("Sessão expirada, faça login novamente!")
+                                        localStorage.removeItem("token");
                                         return navigate('/login')
                                     }
                                     alert('Erro ao atualizar usuário.');

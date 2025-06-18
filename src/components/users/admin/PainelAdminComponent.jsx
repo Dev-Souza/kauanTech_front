@@ -29,6 +29,7 @@ export default function PainelAdminComponent() {
             } catch (error) {
                 if (error.response.status == 403) {
                     alert("Sessão expirada, faça login novamente!")
+                    localStorage.removeItem("token");
                     return navigate('/login')
                 }
                 alert(error.response.data.mensagem)

@@ -44,6 +44,7 @@ export default function ContinueBuyingComponent() {
             } catch (error) {
                 if (error.response.status == 403) {
                     alert("Sessão expirada, faça login novamente!")
+                    localStorage.removeItem("token");
                     return navigate('/login')
                 }
                 alert(error.response?.data?.mensagem || "Erro ao carregar carrinho");
@@ -67,11 +68,10 @@ export default function ContinueBuyingComponent() {
                 }
             });
             setUser(userResponse.data);
-            console.log("USER");
-            console.log(userResponse.data);
         } catch (error) {
             if (error.response.status == 403) {
                 alert("Sessão expirada, faça login novamente!")
+                localStorage.removeItem("token");
                 return navigate('/login')
             }
             alert(error.response?.data?.mensagem || "Erro ao carregar usuário");
@@ -106,6 +106,7 @@ export default function ContinueBuyingComponent() {
         } catch (error) {
             if (error.response.status == 403) {
                 alert("Sessão expirada, faça login novamente!")
+                localStorage.removeItem("token");
                 return navigate('/login')
             }
             alert(error.response.data.mensagem)
@@ -132,6 +133,7 @@ export default function ContinueBuyingComponent() {
         } catch (error) {
             if (error.response.status == 403) {
                 alert("Sessão expirada, faça login novamente!")
+                localStorage.removeItem("token");
                 return navigate('/login')
             }
             alert(error.response.data.mensagem)

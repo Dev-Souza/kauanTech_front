@@ -31,6 +31,7 @@ export default function ProductCreateAdminComponent() {
             } catch (error) {
                 if (error.response.status == 403) {
                     alert("Sessão expirada, faça login novamente!")
+                    localStorage.removeItem("token");
                     return navigate('/login')
                 }
                 alert(error.response?.data?.mensagem || 'Erro de autenticação');
@@ -62,6 +63,7 @@ export default function ProductCreateAdminComponent() {
         } catch (error) {
             if (error.response.status == 403) {
                 alert("Sessão expirada, faça login novamente!")
+                localStorage.removeItem("token");
                 return navigate('/login')
             }
             alert("Erro ao cadastrar produto! " + (error.response?.data?.mensagem || error.message));

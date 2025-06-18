@@ -79,6 +79,7 @@ export default function UserCreateAdminComponent() {
             } catch (error) {
                 if (error.response.status == 403) {
                     alert("Sessão expirada, faça login novamente!")
+                    localStorage.removeItem("token");
                     return navigate('/login')
                 }
                 alert(error?.response?.data?.mensagem || 'Acesso negado');
@@ -110,6 +111,7 @@ export default function UserCreateAdminComponent() {
             } catch (error) {
                 if (error.response.status == 403) {
                     alert("Sessão expirada, faça login novamente!")
+                    localStorage.removeItem("token");
                     return navigate('/login')
                 }
                 alert('Erro ao cadastrar usuário!');

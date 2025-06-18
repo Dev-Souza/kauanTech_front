@@ -27,7 +27,8 @@ export default function HeaderComponentLogado({ props }) {
             } catch (error) {
                 if(error.response.status == 403){
                     alert("Sessão expirada, faça login novamente!")
-                    return navigate('/login')
+                    localStorage.removeItem("token");
+                    return navigate('/')
                 }
                 alert(error.response.data.mensagem);
                 console.log(error)
