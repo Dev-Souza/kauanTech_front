@@ -5,6 +5,7 @@ import kauanTech from '../../services/kauanTech';
 import LoadingComponent from '../utils/LoadingComponent';
 import HeaderComponent from '../headers/HeaderComponent';
 import { jwtDecode } from 'jwt-decode';
+import FooterComponent from '../footer/FooterComponent';
 
 export default function ProductDetailComponent() {
   const { id } = useParams();
@@ -149,6 +150,7 @@ export default function ProductDetailComponent() {
           </Formik>
         </div>
       </section>
+      <FooterComponent/>
     </>
   );
 }

@@ -5,6 +5,7 @@ import * as Yup from "yup"; // Importação para validação
 import kauanTech from "../../services/kauanTech";
 import LoadingComponent from "../utils/LoadingComponent";
 import HeaderPatternComponent from "../headers/HeaderPatternComponent";
+import FooterComponent from "../footer/FooterComponent";
 
 // Schema de validação para o formulário do modal
 const PagamentoSchema = Yup.object().shape({
@@ -333,6 +334,7 @@ export default function CartComponent() {
                 </div>
             )}
             {/* --- FIM DO MODAL --- */}
+            <FooterComponent />
         </>
     );
 }

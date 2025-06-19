@@ -1,10 +1,11 @@
-import { useNavigation, useParams } from "react-router-dom";
+import { useNavigate, useNavigation, useParams } from "react-router-dom";
 import HeaderPatternComponent from "../../headers/HeaderPatternComponent";
 import { useEffect, useState } from "react";
 import LoadingComponent from "../../utils/LoadingComponent";
 import kauanTech from "../../../services/kauanTech";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
+import FooterComponent from "../../footer/FooterComponent";
 
 // Schema de validação para o formulário do modal
 const PagamentoSchema = yup.object().shape({
@@ -25,7 +26,7 @@ export default function ContinueBuyingComponent() {
     // MODAL
     const [isModalOpen, setIsModalOpen] = useState(false);
     // NAVIGATE
-    const navigate = useNavigation()
+    const navigate = useNavigate()
 
     // Pegando o USER que é dono do carrinho
     useEffect(() => {
@@ -252,7 +253,7 @@ export default function ContinueBuyingComponent() {
                     </div>
                 </div>
             </div>
-
+            <FooterComponent/>
             {/* ✨ INÍCIO DO MODAL ✨ */}
             {isModalOpen && (
                 <div
