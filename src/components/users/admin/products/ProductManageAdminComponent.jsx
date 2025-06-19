@@ -141,7 +141,7 @@ export default function ProductManageAdminComponent() {
           onClick={() => setEditingProduct(null)}
         >
           <div
-            className="bg-white p-6 rounded-lg w-full max-w-xl relative"
+            className="bg-white p-6 rounded-lg w-full max-w-xl relative overflow-y-auto max-h-screen my-8"
             onClick={(e) => e.stopPropagation()}
           >
             <button
