@@ -14,6 +14,7 @@ import DashboardAdminComponent from './components/users/admin/dashboard/Dashboar
 import ProductDetailComponent from './components/products/ProductDetailComponent'
 import CartComponent from './components/cart/CartComponent'
 import ContinueBuyingComponent from './components/cart/shopping/ContinueBuyingComponent'
+import PurchasedComponent from './components/cart/purchased/PurchasedComponent'
 
 function App() {
   return (
@@ -42,7 +43,8 @@ function App() {
         {/* Cart component */}
         <Route path='/cart' element={<CartComponent />} />
         <Route path='/continue-buying/:idCart' element={<ContinueBuyingComponent />} />
-        
+        <Route path='/purcharsed' element={<PurchasedComponent />} />
+
       </Routes>
     </BrowserRouter>
   )

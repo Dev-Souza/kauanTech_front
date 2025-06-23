@@ -28,7 +28,7 @@ export default function HeaderComponentLogado({ props }) {
                 if(error.response.status == 403){
                     alert("Sessão expirada, faça login novamente!")
                     localStorage.removeItem("token");
-                    return navigate('/')
+                    return navigate('/login')
                 }
                 alert(error.response.data.mensagem);
                 console.log(error)
@@ -95,6 +95,9 @@ export default function HeaderComponentLogado({ props }) {
                                         Dashboard
                                     </Link>
                                 )}
+                                <Link 
+                                    to="/purcharsed"
+                                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition">Minhas compras</Link>
                                 <button
                                     onClick={handleLogout}
                                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
